@@ -1,8 +1,10 @@
 ## Description
 
-Pipline is a platform or ecosystem to discover, connect, and collaborate with developers or engineers on the African continent.
+This is the backend for the project Pipeline.
 
-As companies find it hard to hire the right talent with the specific skill sets required, this platform aims to provide solution to this hiring problem.
+As companies find it hard to hire the right talent with the specific skill sets required, this project aims to provide solution to this hiring problem.
+Pipeline is a platform or ecosystem to discover, connect, and collaborate with developers or engineers on the African continent.
+
 
 ## Installation
 
