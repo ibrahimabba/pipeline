@@ -5,6 +5,9 @@ This is the backend for the project Pipeline.
 As companies find it hard to hire the right talent with the specific skill sets required, this project aims to provide solution to this hiring problem.
 Pipeline is a platform or ecosystem to discover, connect, and collaborate with developers or engineers on the African continent.
 
+## Built With
+
+The project is built with Nodejs, Nestjs and Graphql.
 
 ## Installation
 
