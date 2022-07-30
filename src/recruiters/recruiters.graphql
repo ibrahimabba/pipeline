@@ -1,0 +1,24 @@
+type Recruiter {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input CreateRecruiterInput {
+  # Example field (placeholder)
+  exampleField: Int
+}
+
+input UpdateRecruiterInput {
+  id: Int!
+}
+
+type Query {
+  recruiters: [Recruiter]!
+  recruiter(id: Int!): Recruiter
+}
+
+type Mutation {
+  createRecruiter(createRecruiterInput: CreateRecruiterInput!): Recruiter!
+  updateRecruiter(updateRecruiterInput: UpdateRecruiterInput!): Recruiter!
+  removeRecruiter(id: Int!): Recruiter
+}
