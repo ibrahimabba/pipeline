@@ -3,6 +3,10 @@ import { UsersService } from './users.service';
 import { CreateUserInput } from './dto/create-user.input';
 import { UpdateUserInput } from './dto/update-user.input';
 import { ProfileInput } from './dto/create-profile-input';
+import { UpdateProfileInput } from './dto/update-profile-input';
+import { WorkExperienceInput } from './dto/update-workexperience-input';
+import { EducationInput } from './dto/update-education-input';
+import { ProjectInput } from './dto/update-projects-input';
 
 @Resolver('User')
 export class UsersResolver {
@@ -28,7 +32,7 @@ export class UsersResolver {
     return this.usersService.findOne(id);
   }
 
-  @Query('profile')
+  @Query('getUserprofile')
   findUserProfile(@Args('userId') userId: string) {
     return this.usersService.findUserProfile(userId);
   }
@@ -49,5 +53,37 @@ export class UsersResolver {
     @Args('profile') profile: ProfileInput,
   ) {
     return this.usersService.createProfile(userId, profile);
+  }
+
+  @Mutation('updateProfile')
+  updateProfile(
+    @Args('userId') userId: string,
+    @Args('profile') profile: UpdateProfileInput,
+  ) {
+    return this.usersService.updateProfile(userId, profile);
+  }
+
+  @Mutation('updateWorkExperience')
+  updateWorkExperience(
+    @Args('userId') userId: string,
+    @Args('workExperience') workExprience: WorkExperienceInput,
+  ) {
+    return this.usersService.updateWorkExperience(userId, workExprience);
+  }
+
+  @Mutation('updateEducation')
+  updateEducation(
+    @Args('userId') userId: string,
+    @Args('education') education: EducationInput,
+  ) {
+    return this.usersService.updateEducation(userId, education);
+  }
+
+  @Mutation('updateProject')
+  updateProject(
+    @Args('userId') userId: string,
+    @Args('project') project: ProjectInput,
+  ) {
+    return this.usersService.updateProject(userId, project);
   }
 }

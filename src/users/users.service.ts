@@ -7,6 +7,10 @@ import { isPasswordSame } from 'src/utils/auth';
 import { generateJWT } from 'src/utils/auth';
 import { env } from 'src/utils/env';
 import { ProfileInput } from './dto/create-profile-input';
+import { UpdateProfileInput } from './dto/update-profile-input';
+import { WorkExperienceInput } from './dto/update-workexperience-input';
+import { EducationInput } from './dto/update-education-input';
+import { ProjectInput } from './dto/update-projects-input';
 
 @Injectable()
 export class UsersService {
@@ -66,6 +70,12 @@ export class UsersService {
     if (userResultObj.records.length === 0) {
       throw new Error(`User with id ${userId} does not exist`);
     }
+
+    const profileResultObj = await this.usersRepository.findUserProfile(userId);
+    if (profileResultObj.records.length > 0) {
+      throw new Error(`User with id ${userId} already has profile`);
+    }
+
     const user = formatResponse(userResultObj)[0];
     const resultObj = await this.usersRepository.createProfile(userId, profile);
     const userProfile = formatResponse(resultObj.profileResultObj)[0];
@@ -96,6 +106,54 @@ export class UsersService {
     };
   }
 
+  async updateProfile(userId: string, profile: UpdateProfileInput) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.updateProfile(userId, profile);
+    return formatResponse(resultObj)[0];
+  }
+
+  async updateWorkExperience(
+    userId: string,
+    workExperienceInput: WorkExperienceInput,
+  ) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.updateWorkExperience(
+      userId,
+      workExperienceInput,
+    );
+    return formatResponse(resultObj)[0];
+  }
+
+  async updateEducation(userId: string, educationInput: EducationInput) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.updateEducation(
+      userId,
+      educationInput,
+    );
+    return formatResponse(resultObj)[0];
+  }
+
+  async updateProject(userId: string, projectInput: ProjectInput) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.updateProject(
+      userId,
+      projectInput,
+    );
+    return formatResponse(resultObj)[0];
+  }
+
   async findAll() {
     const resultObj = await this.usersRepository.findAll();
     return formatResponse(resultObj);
@@ -106,15 +164,18 @@ export class UsersService {
     return formatResponse(resultObj)[0];
   }
 
-  findUserProfile(userId: string) {
-    return `This action returns a user profile`;
+  async findUserProfile(userId: string) {
+    const resultObj = await this.usersRepository.findUserProfile(userId);
+    return formatResponse(resultObj)[0];
   }
 
-  update(id: string, updateUserInput: UpdateUserInput) {
-    return `This action updates a #${id} user`;
+  async update(id: string, updateUserInput: UpdateUserInput) {
+    const resultObj = await this.usersRepository.update(id, updateUserInput);
+    return formatResponse(resultObj)[0];
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} user`;
+  async remove(id: string) {
+    const resultObj = await this.usersRepository.remove(id);
+    return formatResponse(resultObj)[0];
   }
 }

@@ -32,12 +32,12 @@ type Profile {
 }
 
 type ProfileResponse {
-  id: String!
-  firstName: String!
-  lastName: String!
-  email: String!
-  phone: String!
-  location: String!
+  id: String
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  location: String
   bio: String
   image: String
   skills: [String]
@@ -99,7 +99,27 @@ input ProfileInput {
   projects: [ProjectInput]
 }
 
+input UpdateProfileInput {
+  bio: String
+  image: String
+  skills: [String]
+}
+
+type UpdateProfileResponse {
+ bio: String
+  image: String
+  skills: [String]
+}
+
 input WorkExperienceInput {
+  company: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type UpdateWorkExperienceResponse {
   company: String
   position: String
   startDate: String
@@ -115,6 +135,23 @@ input EducationInput {
   description: String
 }
 
+type UpdateEducationResponse {
+  school: String
+  degree: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type UpdateProjectResponse{
+  name: String
+  description: String
+  image: String
+  url: String
+  github: String
+  startDate: String
+  endDate: String
+}
 input ProjectInput {
   name: String
   description: String
@@ -129,7 +166,7 @@ type Query {
   logIn(email: String!, password: String!): UserResponse!
   users: [User]!
   user(id: String!): User
-  profile(userId: String!): Profile
+  getUserprofile(userId: String!): ProfileResponse!
 }
 
 type Mutation {
@@ -137,6 +174,9 @@ type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): User!
   removeUser(id: String!): User
   createProfile(userId: String!, profile: ProfileInput!): ProfileResponse!
-  updateProfile(userId: String!, profile: ProfileInput!): Profile
+  updateProfile(userId: String!, profile: UpdateProfileInput!): UpdateProfileResponse!
+  updateWorkExperience(userId: String!, workExperience: WorkExperienceInput!): UpdateWorkExperienceResponse!
+  updateEducation(userId: String!, education: EducationInput!): UpdateEducationResponse!
+  updateProject(userId: String!, project: ProjectInput!): UpdateProjectResponse!
   removeProfile(userId: String!): Profile
 }
