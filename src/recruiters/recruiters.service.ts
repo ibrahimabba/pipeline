@@ -1,26 +1,84 @@
 import { Injectable } from '@nestjs/common';
+import { formatResponse } from 'src/utils';
+import { generateJWT, isPasswordSame } from 'src/utils/auth';
+import { env } from 'src/utils/env';
 import { CreateRecruiterInput } from './dto/create-recruiter.input';
 import { UpdateRecruiterInput } from './dto/update-recruiter.input';
+import { RecruitersRepository } from './recruiters.repository';
 
 @Injectable()
 export class RecruitersService {
-  create(createRecruiterInput: CreateRecruiterInput) {
-    return 'This action adds a new recruiter';
+  constructor(private readonly recruitersRepository: RecruitersRepository) {}
+
+  async signUp(createRecruiterInput: CreateRecruiterInput) {
+    const userResultObj = await this.recruitersRepository.findRecruiterByEmail(
+      createRecruiterInput.email,
+    );
+
+    if (userResultObj.records.length > 0) {
+      throw new Error(
+        `Recruiter with email ${createRecruiterInput.email} already exists`,
+      );
+    }
+
+    const resultObj = await this.recruitersRepository.create(
+      createRecruiterInput,
+    );
+    const recruiter = formatResponse(resultObj)[0];
+    return {
+      ...recruiter,
+      authorization: generateJWT(
+        { use: 'recruiter', id: recruiter.id },
+        Number(env('JWT_TOKEN_EXPIRY_IN_SECONDS', false) || 40000),
+      ),
+    };
   }
 
-  findAll() {
-    return `This action returns all recruiters`;
+  async logIn(email: string, password: string) {
+    const userResultObj = await this.recruitersRepository.findRecruiterByEmail(
+      email,
+    );
+    if (userResultObj.records.length === 0) {
+      throw new Error(`Recruiter with email ${email} does not exist`);
+    }
+    const recruiter = formatResponse(userResultObj)[0];
+    if (!isPasswordSame(password, recruiter.password)) {
+      throw new Error(`Invalid password`);
+    }
+    return {
+      ...recruiter,
+      authorization: generateJWT(
+        { use: 'recruiter', id: recruiter.id },
+        Number(env('JWT_TOKEN_EXPIRY_IN_SECONDS', false) || 40000),
+      ),
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} recruiter`;
+  async findOne(id: string) {
+    const resultObj = await this.recruitersRepository.findOne(id);
+    return formatResponse(resultObj)[0];
   }
 
-  update(id: number, updateRecruiterInput: UpdateRecruiterInput) {
-    return `This action updates a #${id} recruiter`;
+  async update(id: string, updateRecruiterInput: UpdateRecruiterInput) {
+    const resultObj = await this.recruitersRepository.update(
+      id,
+      updateRecruiterInput,
+    );
+    return formatResponse(resultObj)[0];
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} recruiter`;
+  async remove(id: string) {
+    const resultObj = await this.recruitersRepository.remove(id);
+    return formatResponse(resultObj)[0];
+  }
+
+  async viewTalents() {
+    const resultObj = await this.recruitersRepository.viewTalents();
+    return formatResponse(resultObj);
+  }
+
+  async viewTalent(id: string) {
+    const resultObj = await this.recruitersRepository.viewTalent(id);
+    return formatResponse(resultObj)[0];
   }
 }

@@ -1,24 +1,65 @@
 type Recruiter {
-  # Example field (placeholder)
-  exampleField: Int
+  id: ID!
+  firstName: String!;
+  lastName: String!;
+  email: String!
+  password: String!
+  company: Company!
+  image: String
 }
 
 input CreateRecruiterInput {
-  # Example field (placeholder)
-  exampleField: Int
+  firstName: String!;
+  lastName: String!;
+  email: String!
+  password: String!
+  company: Company!
+  image: String
 }
 
 input UpdateRecruiterInput {
-  id: Int!
+  firstName: String!;
+  lastName: String!;
+  email: String!
+  password: String!
+  company: Company!
+  image: String
+}
+
+type Talent {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  location: String!
+}
+
+type RecruiterResponse {
+  id: ID!
+  firstName: String!;
+  lastName: String!;
+  email: String!
+  password: String!
+  company: Company!
+  image: String
+  authorization: Auth
+}
+
+type Auth {
+  token: String!
+  expiry: String!
 }
 
 type Query {
-  recruiters: [Recruiter]!
-  recruiter(id: Int!): Recruiter
+  logInRecruiter(email: String!, password: String!): RecruiterResponse!
+  recruiter(id: String!): Recruiter
+  viewTalents: [Talent]!
+  viewTalent(id: String!): Talent
 }
 
 type Mutation {
-  createRecruiter(createRecruiterInput: CreateRecruiterInput!): Recruiter!
-  updateRecruiter(updateRecruiterInput: UpdateRecruiterInput!): Recruiter!
-  removeRecruiter(id: Int!): Recruiter
+  createRecruiter(createRecruiterInput: CreateRecruiterInput!): RecruiterResponse!
+  updateRecruiter(updateRecruiterInput: UpdateRecruiterInput!): RecruiterResponse!
+  removeRecruiter(id: String!): RecruiterResponse
 }
