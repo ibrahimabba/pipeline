@@ -4,7 +4,7 @@ type Recruiter {
   lastName: String!
   email: String!
   password: String!
-  company: Company!
+  company: String!
   image: String
 }
 
@@ -13,7 +13,7 @@ input CreateRecruiterInput {
   lastName: String!
   email: String!
   password: String!
-  company: Company!
+  company: String!
   image: String
 }
 
@@ -22,7 +22,7 @@ input UpdateRecruiterInput {
   lastName: String!
   email: String!
   password: String!
-  company: Company!
+  company: String!
   image: String
 }
 
@@ -41,7 +41,7 @@ type RecruiterResponse {
   lastName: String!
   email: String!
   password: String!
-  company: Company!
+  company: String!
   image: String
   authorization: Auth
 }
