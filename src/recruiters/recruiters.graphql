@@ -1,7 +1,7 @@
 type Recruiter {
   id: ID!
-  firstName: String!;
-  lastName: String!;
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   company: Company!
@@ -9,8 +9,8 @@ type Recruiter {
 }
 
 input CreateRecruiterInput {
-  firstName: String!;
-  lastName: String!;
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   company: Company!
@@ -18,8 +18,8 @@ input CreateRecruiterInput {
 }
 
 input UpdateRecruiterInput {
-  firstName: String!;
-  lastName: String!;
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   company: Company!
@@ -37,8 +37,8 @@ type Talent {
 
 type RecruiterResponse {
   id: ID!
-  firstName: String!;
-  lastName: String!;
+  firstName: String!
+  lastName: String!
   email: String!
   password: String!
   company: Company!
