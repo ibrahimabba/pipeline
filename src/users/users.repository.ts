@@ -202,7 +202,7 @@ export class UsersRepository {
       location: updateUserInput.location,
       phone: updateUserInput.phone,
       email: updateUserInput.email,
-      password: updateUserInput.password,
+      password: hashPassword(updateUserInput.password),
     };
     return executeCypherQuery(query, params);
   }
