@@ -33,6 +33,5 @@ export const generateJWT = (
 
 export const validateJWTToken = (authorization: string): any => {
   const [, token] = authorization?.split('Bearer ');
-
   return jwt.verify(token, env('JWT_SECRET'));
 };

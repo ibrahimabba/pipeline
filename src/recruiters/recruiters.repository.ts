@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-import { executeCypherQuery } from 'src/database';
+import { executeCypherQuery, session } from 'src/database';
 import { hashPassword } from 'src/utils/auth';
 import { v4 as uuidv4 } from 'uuid';
 import { CreateRecruiterInput } from './dto/create-recruiter.input';
@@ -24,7 +24,8 @@ export class RecruitersRepository {
   }
 
   async findRecruiterByEmail(email: string) {
-    const query = 'MATCH (recruiter:Recruiter { email: $email }) RETURN recruiter';
+    const query =
+      'MATCH (recruiter:Recruiter { email: $email }) RETURN recruiter';
     const params = { email };
     const resultObj = await executeCypherQuery(query, params);
     return resultObj;
@@ -33,7 +34,13 @@ export class RecruitersRepository {
   async findOne(id: string) {
     const query = 'MATCH (recruiter:Recruiter { id: $id }) RETURN recruiter';
     const params = { id };
-    const resultObj = await executeCypherQuery(query, params);
+    let resultObj;
+    try {
+      await session.writeTransaction(async (tx) => {
+        resultObj = await tx.run(query, params);
+      });
+    } catch (error) {}
+
     return resultObj;
   }
 
@@ -51,14 +58,14 @@ export class RecruitersRepository {
     return executeCypherQuery(query, params);
   }
 
-  async viewTalents(){
+  async viewTalents() {
     const query = 'MATCH (users:User) RETURN users LIMIT 100';
     const params = {};
     const resultObj = await executeCypherQuery(query, params);
     return resultObj;
   }
 
-  async viewTalent(id: string){
+  async viewTalent(id: string) {
     const query = 'MATCH (user:User { id: $id }) RETURN user';
     const params = { id };
     const resultObj = await executeCypherQuery(query, params);

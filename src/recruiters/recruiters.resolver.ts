@@ -25,12 +25,14 @@ export class RecruitersResolver {
   }
 
   @Query('viewTalents')
-  viewTalents() {
+  viewTalents(@Context() context) {
+    this.validateRecruiter(context);
     return this.recruitersService.viewTalents();
   }
 
   @Query('viewTalent')
-  viewTalent(@Args('id') id: string) {
+  viewTalent(@Args('id') id: string, @Context() context) {
+    this.validateRecruiter(context);
     return this.recruitersService.viewTalent(id);
   }
 
@@ -47,5 +49,9 @@ export class RecruitersResolver {
   @Mutation('removeRecruiter')
   remove(@Args('id') id: string) {
     return this.recruitersService.remove(id);
+  }
+
+  validateRecruiter(context: { req: { headers: { authorization?: string } } }) {
+    return this.recruitersService.validateRecruiter(context);
   }
 }

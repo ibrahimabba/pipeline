@@ -11,6 +11,7 @@ import { RecruitersModule } from './recruiters/recruiters.module';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       typePaths: ['./**/*.graphql'],
+      context: ({ req }) => ({ req }),
     }),
     UsersModule,
     RecruitersModule,

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { formatResponse } from 'src/utils';
-import { generateJWT, isPasswordSame } from 'src/utils/auth';
+import { generateJWT, isPasswordSame, validateJWTToken } from 'src/utils/auth';
 import { env } from 'src/utils/env';
 import { CreateRecruiterInput } from './dto/create-recruiter.input';
 import { UpdateRecruiterInput } from './dto/update-recruiter.input';
@@ -80,5 +80,33 @@ export class RecruitersService {
   async viewTalent(id: string) {
     const resultObj = await this.recruitersRepository.viewTalent(id);
     return formatResponse(resultObj)[0];
+  }
+
+  async validateRecruiter(conext: {
+    req: { headers: { authorization?: string } };
+  }) {
+    const authorization = conext.req.headers.authorization;
+    if (!authorization) {
+      throw new Error('Authorization header is missing');
+    }
+
+    let id: any, use: any;
+    try {
+      const user = await validateJWTToken(authorization);
+      id = user.id;
+      use = user.use;
+    } catch {
+      throw new Error('Invalid token');
+    }
+
+    if (use !== 'recruiter') {
+      throw new Error('Not allowed to access this resource');
+    }
+
+    const recruiter = await this.recruitersRepository.findOne(id);
+
+    if (!recruiter) {
+      throw new Error('Recruiter does not exist');
+    }
   }
 }
