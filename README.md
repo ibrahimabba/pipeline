@@ -7,7 +7,7 @@ Pipeline is a platform or ecosystem to discover, connect, and collaborate with d
 
 ## Built With
 
-The project is built with Nodejs, Nestjs and Graphql.
+The project is built with Nodejs, Neo4j, Nestjs and Graphql.
 
 ## Installation
 
