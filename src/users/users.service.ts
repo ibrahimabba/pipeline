@@ -130,6 +130,30 @@ export class UsersService {
     return formatResponse(resultObj)[0];
   }
 
+  async addWorkExperience(
+    userId: string,
+    workExperienceInput: WorkExperienceInput,
+  ) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.addWorkExperience(
+      userId,
+      workExperienceInput,
+    );
+    return formatResponse(resultObj)[0];
+  }
+
+  async removeWorkExperience(userId: string, id: string) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.removeWorkExperience(id);
+    return formatResponse(resultObj)[0];
+  }
+
   async updateEducation(userId: string, educationInput: EducationInput) {
     const userResultObj = await this.usersRepository.findOne(userId);
     if (userResultObj.records.length === 0) {
@@ -142,6 +166,27 @@ export class UsersService {
     return formatResponse(resultObj)[0];
   }
 
+  async addEducation(userId: string, educationInput: EducationInput) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.addEducation(
+      userId,
+      educationInput,
+    );
+    return formatResponse(resultObj)[0];
+  }
+
+  async removeEducation(userId: string, id: string) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.removeEducation(id);
+    return formatResponse(resultObj)[0];
+  }
+
   async updateProject(userId: string, projectInput: ProjectInput) {
     const userResultObj = await this.usersRepository.findOne(userId);
     if (userResultObj.records.length === 0) {
@@ -151,6 +196,27 @@ export class UsersService {
       userId,
       projectInput,
     );
+    return formatResponse(resultObj)[0];
+  }
+
+  async addProject(userId: string, projectInput: ProjectInput) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.addProject(
+      userId,
+      projectInput,
+    );
+    return formatResponse(resultObj)[0];
+  }
+
+  async removeProject(userId: string, id: string) {
+    const userResultObj = await this.usersRepository.findOne(userId);
+    if (userResultObj.records.length === 0) {
+      throw new Error(`User with id ${userId} does not exist`);
+    }
+    const resultObj = await this.usersRepository.removeProject(id);
     return formatResponse(resultObj)[0];
   }
 

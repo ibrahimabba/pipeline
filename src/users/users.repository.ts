@@ -158,6 +158,30 @@ export class UsersRepository {
     return resultObj;
   }
 
+  async addWorkExperience(
+    userId: string,
+    workExperienceInput: WorkExperienceInput,
+  ) {
+    const query = `MATCH (user:User { id: $userId }) CREATE (user)-[:HAS_WORK_EXPERIENCE]->(workExperience:WorkExperience { id: $id, userId: $userId, company: $company, position: $position, startDate: $startDate, endDate: $endDate }) RETURN workExperience`;
+    const params = {
+      userId,
+      id: uuidv4(),
+      company: workExperienceInput.company,
+      position: workExperienceInput.position,
+      startDate: workExperienceInput.startDate,
+      endDate: workExperienceInput.endDate,
+    };
+    const resultObj = await executeCypherQuery(query, params);
+    return resultObj;
+  }
+
+  async removeWorkExperience(id: string) {
+    const query = `MATCH (workExperience:WorkExperience { id: $id }) DETACH DELETE workExperience`;
+    const params = { id };
+    const resultObj = await executeCypherQuery(query, params);
+    return resultObj;
+  }
+
   async updateEducation(userId: string, educationInput: EducationInput) {
     const query = `MATCH (education:Education { userId: $userId }) SET education.school = $school, education.degree = $degree, education.startDate = $startDate, education.endDate = $endDate RETURN education`;
     const params = {
@@ -167,6 +191,27 @@ export class UsersRepository {
       startDate: educationInput.startDate,
       endDate: educationInput.endDate,
     };
+    const resultObj = await executeCypherQuery(query, params);
+    return resultObj;
+  }
+
+  async addEducation(userId: string, educationInput: EducationInput) {
+    const query = `MATCH (user:User { id: $userId }) CREATE (user)-[:HAS_EDUCATION]->(education:Education { id: $id, userId: $userId, school: $school, degree: $degree, startDate: $startDate, endDate: $endDate }) RETURN education`;
+    const params = {
+      userId,
+      id: uuidv4(),
+      school: educationInput.school,
+      degree: educationInput.degree,
+      startDate: educationInput.startDate,
+      endDate: educationInput.endDate,
+    };
+    const resultObj = await executeCypherQuery(query, params);
+    return resultObj;
+  }
+
+  async removeEducation(id: string) {
+    const query = `MATCH (education:Education { id: $id }) DETACH DELETE education`;
+    const params = { id };
     const resultObj = await executeCypherQuery(query, params);
     return resultObj;
   }
@@ -183,6 +228,30 @@ export class UsersRepository {
       startDate: projectInput.startDate,
       endDate: projectInput.endDate,
     };
+    const resultObj = await executeCypherQuery(query, params);
+    return resultObj;
+  }
+
+  async addProject(userId: string, projectInput: ProjectInput) {
+    const query = `MATCH (user:User { id: $userId }) CREATE (user)-[:HAS_PROJECT]->(project:Project { id: $id, userId: $userId, name: $name, description: $description, image: $image, url: $url, github: $github, startDate: $startDate, endDate: $endDate }) RETURN project`;
+    const params = {
+      userId,
+      id: uuidv4(),
+      name: projectInput.name,
+      description: projectInput.description,
+      image: projectInput.image,
+      url: projectInput.url,
+      github: projectInput.github,
+      startDate: projectInput.startDate,
+      endDate: projectInput.endDate,
+    };
+    const resultObj = await executeCypherQuery(query, params);
+    return resultObj;
+  }
+
+  async removeProject(id: string) {
+    const query = `MATCH (project:Project { id: $id }) DETACH DELETE project`;
+    const params = { id };
     const resultObj = await executeCypherQuery(query, params);
     return resultObj;
   }

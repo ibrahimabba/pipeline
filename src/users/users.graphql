@@ -176,7 +176,13 @@ type Mutation {
   createProfile(userId: String!, profile: ProfileInput!): ProfileResponse!
   updateProfile(userId: String!, profile: UpdateProfileInput!): UpdateProfileResponse!
   updateWorkExperience(userId: String!, workExperience: WorkExperienceInput!): UpdateWorkExperienceResponse!
+  addWorkExperience(userId: String!, workExperience: WorkExperienceInput!): WorkExperience
+  removeWorkExperience(userId: String!, id: String!): WorkExperience
   updateEducation(userId: String!, education: EducationInput!): UpdateEducationResponse!
+  addEducation(userId: String!, education: EducationInput!): Education
+  removeEducation(userId: String!, id: String!): Education
   updateProject(userId: String!, project: ProjectInput!): UpdateProjectResponse!
+  addProject(userId: String!, project: ProjectInput!): Project
+  removeProject(userId: String!, id: String!): Project
   removeProfile(userId: String!): Profile
 }

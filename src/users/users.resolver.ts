@@ -71,6 +71,19 @@ export class UsersResolver {
     return this.usersService.updateWorkExperience(userId, workExprience);
   }
 
+  @Mutation('addWorkExperience')
+  addWorkExperience(
+    @Args('userId') userId: string,
+    @Args('workExperience') workExprience: WorkExperienceInput,
+  ) {
+    return this.usersService.addWorkExperience(userId, workExprience);
+  }
+
+  @Mutation('removeWorkExperience')
+  removeWorkExperience(@Args('userId') userId: string, @Args('id') id: string) {
+    return this.usersService.removeWorkExperience(userId, id);
+  }
+
   @Mutation('updateEducation')
   updateEducation(
     @Args('userId') userId: string,
@@ -79,11 +92,37 @@ export class UsersResolver {
     return this.usersService.updateEducation(userId, education);
   }
 
+  @Mutation('addEducation')
+  addEducation(
+    @Args('userId') userId: string,
+    @Args('education') education: EducationInput,
+  ) {
+    return this.usersService.addEducation(userId, education);
+  }
+
+  @Mutation('removeEducation')
+  removeEducation(@Args('userId') userId: string, @Args('id') id: string) {
+    return this.usersService.removeEducation(userId, id);
+  }
+
   @Mutation('updateProject')
   updateProject(
     @Args('userId') userId: string,
     @Args('project') project: ProjectInput,
   ) {
     return this.usersService.updateProject(userId, project);
+  }
+
+  @Mutation('addProject')
+  addProject(
+    @Args('userId') userId: string,
+    @Args('project') project: ProjectInput,
+  ) {
+    return this.usersService.addProject(userId, project);
+  }
+
+  @Mutation('removeProject')
+  removeProject(@Args('userId') userId: string, @Args('id') id: string) {
+    return this.usersService.removeProject(userId, id);
   }
 }
