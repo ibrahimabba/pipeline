@@ -1,8 +1,8 @@
-export class CreateUserInput {
+export class CreateRecruiterInput {
   firstName: string;
   lastName: string;
   email: string;
   password: string;
-  phone: string;
-  location: string;
+  company: string;
+  image: string;
 }

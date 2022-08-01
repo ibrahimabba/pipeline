@@ -1,0 +1,65 @@
+type Recruiter {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  company: String!
+  image: String
+}
+
+input CreateRecruiterInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  company: String!
+  image: String
+}
+
+input UpdateRecruiterInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  company: String!
+  image: String
+}
+
+type Talent {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  location: String!
+}
+
+type RecruiterResponse {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  company: String!
+  image: String
+  authorization: Auth
+}
+
+type Auth {
+  token: String!
+  expiry: String!
+}
+
+type Query {
+  logInRecruiter(email: String!, password: String!): RecruiterResponse!
+  recruiter(id: String!): Recruiter
+  viewTalents: [Talent]!
+  viewTalent(id: String!): Talent
+}
+
+type Mutation {
+  createRecruiter(createRecruiterInput: CreateRecruiterInput!): RecruiterResponse!
+  updateRecruiter(updateRecruiterInput: UpdateRecruiterInput!): RecruiterResponse!
+  removeRecruiter(id: String!): RecruiterResponse
+}

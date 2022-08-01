@@ -1,24 +1,188 @@
 type User {
-  # Example field (placeholder)
-  exampleField: Int
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  location: String!
+}
+
+type UserResponse {
+  id: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  phone: String!
+  location: String!
+  authorization: Auth!
+}
+
+type Auth {
+  token: String!
+  expiry: String!
+}
+
+type Profile {
+  bio: String
+  image: String
+  skills: [String]
+  workExperience: [WorkExperience]
+  education: [Education]
+  projects: [Project]
+}
+
+type ProfileResponse {
+  id: String
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  location: String
+  bio: String
+  image: String
+  skills: [String]
+  workExperience: [WorkExperience]
+  education: [Education]
+  projects: [Project]
+}
+
+type WorkExperience {
+  company: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type Education {
+  school: String
+  degree: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type Project {
+  name: String
+  description: String
+  image: String
+  url: String
+  github: String
+  startDate: String
+  endDate: String
 }
 
 input CreateUserInput {
-  # Example field (placeholder)
-  exampleField: Int
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  phone: String!
+  location: String!
 }
 
 input UpdateUserInput {
-  id: Int!
+  firstName: String
+  lastName: String
+  email: String
+  password: String
+  phone: String
+  location: String
+}
+
+input ProfileInput {
+  bio: String
+  image: String
+  skills: [String]
+  workExperience: [WorkExperienceInput]
+  education: [EducationInput]
+  projects: [ProjectInput]
+}
+
+input UpdateProfileInput {
+  bio: String
+  image: String
+  skills: [String]
+}
+
+type UpdateProfileResponse {
+ bio: String
+  image: String
+  skills: [String]
+}
+
+input WorkExperienceInput {
+  company: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type UpdateWorkExperienceResponse {
+  company: String
+  position: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+input EducationInput {
+  school: String
+  degree: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type UpdateEducationResponse {
+  school: String
+  degree: String
+  startDate: String
+  endDate: String
+  description: String
+}
+
+type UpdateProjectResponse{
+  name: String
+  description: String
+  image: String
+  url: String
+  github: String
+  startDate: String
+  endDate: String
+}
+input ProjectInput {
+  name: String
+  description: String
+  image: String
+  url: String
+  github: String
+  startDate: String
+  endDate: String
 }
 
 type Query {
+  logIn(email: String!, password: String!): UserResponse!
   users: [User]!
-  user(id: Int!): User
+  user(id: String!): User
+  getUserprofile(userId: String!): ProfileResponse!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
+  signUp(createUserInput: CreateUserInput!): UserResponse!
   updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User
+  removeUser(id: String!): User
+  createProfile(userId: String!, profile: ProfileInput!): ProfileResponse!
+  updateProfile(userId: String!, profile: UpdateProfileInput!): UpdateProfileResponse!
+  updateWorkExperience(userId: String!, workExperience: WorkExperienceInput!): UpdateWorkExperienceResponse!
+  addWorkExperience(userId: String!, workExperience: WorkExperienceInput!): WorkExperience
+  removeWorkExperience(userId: String!, id: String!): WorkExperience
+  updateEducation(userId: String!, education: EducationInput!): UpdateEducationResponse!
+  addEducation(userId: String!, education: EducationInput!): Education
+  removeEducation(userId: String!, id: String!): Education
+  updateProject(userId: String!, project: ProjectInput!): UpdateProjectResponse!
+  addProject(userId: String!, project: ProjectInput!): Project
+  removeProject(userId: String!, id: String!): Project
+  removeProfile(userId: String!): Profile
 }
